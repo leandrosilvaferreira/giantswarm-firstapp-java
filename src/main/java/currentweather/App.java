@@ -27,7 +27,7 @@ public class App {
 			String temperature = json.getJSONObject("main").get("temp").toString();	
 			String wind = json.getJSONObject("wind").get("speed").toString();	
 
-    	String result = "The current temperature is " + temperature + " farenheit and the wind  is " + wind + " mph.";
+    	String result = "The current temperature is " + temperature + " farenheit and the wind is " + wind + " mph.";
         //String result = json.toString();
 
         return result;
