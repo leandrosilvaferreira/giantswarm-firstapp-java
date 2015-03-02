@@ -22,15 +22,22 @@ public class App {
     }
 
     private static String getCurrentWeather() throws IOException, JSONException {
-      JSONObject json = readJsonFromUrl("http://api.openweathermap.org/data/2.5/weather?q=Cologne");
+      
+      if (result = jedis.get("weather")) {
+      } else {
+        JSONObject json = readJsonFromUrl("http://api.openweathermap.org/data/2.5/weather?q=Cologne");
 
-			String temperature = json.getJSONObject("main").get("temp").toString();	
-			String wind = json.getJSONObject("wind").get("speed").toString();	
+        String temperature = json.getJSONObject("main").get("temp").toString(); 
+        String wind = json.getJSONObject("wind").get("speed").toString(); 
 
-    	String result = "The current temperature is " + temperature + " farenheit and the wind is " + wind + " mph.";
-        //String result = json.toString();
+        String result = "The current temperature is " + temperature + " farenheit and the wind is " + wind + " mph.";
 
-        return result;
+        Jedis jedis = new Jedis(System.getenv("REDIS_PORT_6379_TCP_ADDR"),System.getenv("REDIS_PORT_6379_TCP_PORT"));
+        jedis.set("weather", result);
+        jedis.expire("weather", 60);
+      }
+
+      return result
     }
 
     private static String readAll(Reader rd) throws IOException {
