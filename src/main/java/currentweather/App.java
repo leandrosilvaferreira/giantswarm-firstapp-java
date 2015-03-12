@@ -39,8 +39,7 @@ public class App {
       jedis.connect();
       String result = jedis.get("weather");
 
-      if (result != "") {
-      } else {
+      if (result == null) {
         JSONObject json = readJsonFromUrl("http://api.openweathermap.org/data/2.5/weather?q=Cologne");
 
         String temperature = json.getJSONObject("main").get("temp").toString(); 
