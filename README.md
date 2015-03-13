@@ -14,7 +14,7 @@ http://docs.giantswarm.io/guides/your-first-application/java/
 
 ## Edit source
 
-The web application is implemented [Spark](http://sparkjava.com/). When the page is opened, it fetches current weather data for Cologne from the [openweather API](http://api.openweathermap.org/data/2.5/weather?q=Cologne) and prints some details from that data. The response is cached on Redis for 60 seconds.
+The web application is implemented using [Spark](http://sparkjava.com/). When the page is opened, it fetches current weather data for Cologne from the [openweather API](http://api.openweathermap.org/data/2.5/weather?q=Cologne) and prints some details from that data. The response is cached on Redis for 60 seconds.
 
 ## Run locally
 
