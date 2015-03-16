@@ -7,8 +7,8 @@
                 {
                     "component_name": "java",
                     "image": "registry.giantswarm.io/$COMPANY/currentweather",
-                    "ports": [ "4567/tcp" ],
-                    "domains": { "currentweather-$username.gigantic.io": "4567" },
+                    "ports": [ 4567 ],
+                    "domains": { "currentweather-$username.gigantic.io": 4567 },
                     "dependencies": [
                         {
                             "name": "redis",

@@ -2,6 +2,7 @@ PROJECT = currentweather
 REGISTRY = registry.giantswarm.io
 # The default company equeals to your username
 COMPANY :=  $(shell swarm user)
+username :=  $(shell swarm user)
 
 build:
 	docker build -t $(REGISTRY)/$(COMPANY)/$(PROJECT) .
@@ -17,4 +18,4 @@ push: build
 	docker push $(REGISTRY)/$(COMPANY)/$(PROJECT)
 
 up: build
-	swarm up --var=COMPANY=$(COMPANY)
+	swarm up --var=COMPANY=$(COMPANY) --var=username=$(username)

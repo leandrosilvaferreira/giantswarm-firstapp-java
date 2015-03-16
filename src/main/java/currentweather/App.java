@@ -35,10 +35,12 @@ public class App {
         port = Integer.parseInt(System.getenv("REDIS_PORT_6379_TCP_PORT"));
       }
 
+      // get the cached weather if available
       Jedis jedis = new Jedis(addr,port);
       jedis.connect();
       String result = jedis.get("weather");
 
+      // if weather was not cached then make an API call and cache the result
       if (result == null) {
         JSONObject json = readJsonFromUrl("http://api.openweathermap.org/data/2.5/weather?q=Cologne");
 
