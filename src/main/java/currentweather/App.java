@@ -42,7 +42,7 @@ public class App {
 
       // if weather was not cached then make an API call and cache the result
       if (result == null) {
-        JSONObject json = readJsonFromUrl("http://api.openweathermap.org/data/2.5/weather?q=Cologne");
+        JSONObject json = readJsonFromUrl("http://api.openweathermap.org/data/2.5/weather?q=Cologne,DE");
 
         String temperature = json.getJSONObject("main").get("temp").toString(); 
         String wind = json.getJSONObject("wind").get("speed").toString(); 

@@ -7,11 +7,11 @@ username :=  $(shell swarm user)
 build:
 	docker build -t $(REGISTRY)/$(COMPANY)/$(PROJECT) .
 
-run-test-redis: build
+run-redis: build
 	docker run --rm -p 6379:6379\
 	 --name redis redis
 
-run-test-application: build	
+run-application: build	
 	docker run --rm -p 4567:4567 --link redis:redis $(REGISTRY)/$(COMPANY)/$(PROJECT)
 
 push: build
