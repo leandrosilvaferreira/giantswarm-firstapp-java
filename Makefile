@@ -1,21 +1,20 @@
 PROJECT = currentweather
 REGISTRY = registry.giantswarm.io
 # The default company equeals to your username
-COMPANY :=  $(shell swarm user)
 username :=  $(shell swarm user)
 
 build:
-	docker build -t $(REGISTRY)/$(COMPANY)/$(PROJECT) .
+	docker build -t $(REGISTRY)/$(username)/$(PROJECT) .
 
 run-redis: build
 	docker run --rm -p 6379:6379\
 	 --name redis redis
 
 run-application: build	
-	docker run --rm -p 4567:4567 --link redis:redis $(REGISTRY)/$(COMPANY)/$(PROJECT)
+	docker run --rm -p 4567:4567 --link redis:redis $(REGISTRY)/$(username)/$(PROJECT)
 
 push: build
-	docker push $(REGISTRY)/$(COMPANY)/$(PROJECT)
+	docker push $(REGISTRY)/$(username)/$(PROJECT)
 
 up: build
-	swarm up --var=COMPANY=$(COMPANY) --var=username=$(username)
+	swarm up --var=username=$(username)
