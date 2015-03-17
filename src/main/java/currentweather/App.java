@@ -49,8 +49,7 @@ public class App {
 
         result = "The current temperature is " + temperature + " farenheit and the wind is " + wind + " mph.";
 
-        jedis.set("weather", result);
-        jedis.expire("weather", 60);
+        jedis.setex("weather", 60, result);
       }
 
       return result;
