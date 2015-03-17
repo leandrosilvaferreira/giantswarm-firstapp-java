@@ -16,4 +16,4 @@ ADD src /code/src
 RUN ["mvn", "package"]
 
 EXPOSE 4567
-CMD ["java", "-jar", "target/currentweather-jar-with-dependencies.jar"]
+ENTRYPOINT ["java", "-jar", "target/currentweather-jar-with-dependencies.jar"]
