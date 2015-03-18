@@ -44,10 +44,11 @@ public class App {
       if (result == null) {
         JSONObject json = readJsonFromUrl("http://api.openweathermap.org/data/2.5/weather?q=Cologne,DE");
 
-        String temperature = json.getJSONObject("main").get("temp").toString(); 
-        String wind = json.getJSONObject("wind").get("speed").toString(); 
+        Double temperature = (Double) json.getJSONObject("main").get("temp") - 273;
+        int temp = Integer.valueOf(temperature.intValue());
+        Double wind = (Double) json.getJSONObject("wind").get("speed") * 3.6;
 
-        result = "The current temperature is " + temperature + " farenheit and the wind is " + wind + " mph.";
+        result = "The current temperature " + temp + " degrees and the wind is " + wind.toString() + " km/h.";
 
         jedis.setex("weather", 60, result);
       }
