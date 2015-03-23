@@ -7,7 +7,7 @@ build:
 	docker build -t $(REGISTRY)/$(username)/$(PROJECT) .
 
 run-redis: build
-	docker run --d -p 6379:6379\
+	docker run -d -p 6379:6379\
 	 --name redis redis
 
 run-application: build	
