@@ -1,4 +1,4 @@
-FROM java:8 
+FROM java:8
 
 # Install maven
 RUN apt-get update
@@ -16,4 +16,4 @@ ADD src /code/src
 RUN ["mvn", "package"]
 
 EXPOSE 4567
-ENTRYPOINT ["java", "-jar", "target/currentweather-jar-with-dependencies.jar"]
+ENTRYPOINT ["/usr/lib/jvm/java-8-openjdk-amd64/bin/java", "-jar", "target/currentweather-jar-with-dependencies.jar"]
