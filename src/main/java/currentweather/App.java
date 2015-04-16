@@ -17,26 +17,23 @@ import redis.clients.jedis.Jedis;
 
 public class App {
 
-    public static void main(String[] args) {
-        get("/", (req, res) -> {
-            return "Live weather: " + getCurrentWeather();
-        });
+    public static void main(String[] args) throws Exception {
+      //read necessary environment variables
+      String redisAddr = System.getenv("REDIS_PORT_6379_TCP_ADDR");
+      String redisPortString = System.getenv("REDIS_PORT_6379_TCP_PORT");
+      if (redisAddr == null || redisPortString == null) {
+        throw new Exception("Necessary Environment variables (REDIS_PORT_6379_TCP_ADDR, REDIS_PORT_6379_TCP_PORT) not set");
+      }
+      Integer redisPort = Integer.parseInt(redisPortString);
+
+      get("/", (req, res) -> {
+          return "Live weather: " + getCurrentWeather(redisAddr, redisPort);
+      });
     }
 
-    private static String getCurrentWeather() throws IOException, JSONException {
-      
-      String addr = "redis";
-      if (System.getenv("REDIS_PORT_6379_TCP_ADDR") != null) {
-        addr = System.getenv("REDIS_PORT_6379_TCP_ADDR");
-      }
-
-      int port = 6379;
-      if (System.getenv("REDIS_PORT_6379_TCP_PORT") != null) {
-        port = Integer.parseInt(System.getenv("REDIS_PORT_6379_TCP_PORT"));
-      }
-
+    private static String getCurrentWeather(String redisAddr, Integer redisPort) throws IOException, JSONException {
       // get the cached weather if available
-      Jedis jedis = new Jedis(addr,port);
+      Jedis jedis = new Jedis(redisAddr, redisPort);
       jedis.connect();
       String result = jedis.get("weather");
 
