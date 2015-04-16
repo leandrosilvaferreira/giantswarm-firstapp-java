@@ -52,6 +52,8 @@ public class App {
         result = "The current temperature " + temp + " degrees and the wind is " + wind.toString() + " km/h.";
 
         jedis.setex("weather", 60, result);
+      } else {
+        System.out.println("Using cached data");
       }
 
       return result;
