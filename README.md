@@ -22,15 +22,15 @@ To run the two required containers locally you just have to do
 
 ```
 $ make push
-$ docker-compose up
+$ make run-redis
+$ make run-application
 ```
 
-or without Docker Compose
+If you want to use Docker Compose, you will have to edit the docker-compose.yml manually to reflect your username instead of 'puja' (because [Docker Compose cannot handle dynamic environment variables](https://github.com/docker/compose/issues/495)). Then you can simply use
 
 ```
 $ make push
-$ make run-redis
-$ make run-application
+$ docker-compose up
 ```
 
 This creates a custom Docker image with the Java binary, pushes it to our private registry, and starts both the custom Docker container and a Redis container.
