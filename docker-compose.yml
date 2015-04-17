@@ -1,5 +1,5 @@
 java:
-  image: registry.giantswarm.io/puja/currentweather
+  build: .
   ports:
    - "4567:4567"
   links:

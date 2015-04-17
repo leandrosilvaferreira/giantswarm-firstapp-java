@@ -6,7 +6,7 @@ username :=  $(shell swarm user)
 build:
 	docker build -t $(REGISTRY)/$(username)/$(PROJECT) .
 
-run-redis: build
+run-redis:
 	docker run -d -p 6379:6379\
 	 --name redis redis
 
@@ -16,5 +16,5 @@ run-application: build
 push: build
 	docker push $(REGISTRY)/$(username)/$(PROJECT)
 
-up: build
+up: push
 	swarm up --var=username=$(username)

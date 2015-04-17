@@ -26,14 +26,11 @@ $ make run-redis
 $ make run-application
 ```
 
-If you want to use Docker Compose, you will have to edit the docker-compose.yml manually to reflect your username instead of 'puja' (because [Docker Compose cannot handle dynamic environment variables](https://github.com/docker/compose/issues/495)). Then you can simply use
+This creates a custom Docker image with the Java binary, pushes it to our private registry, and starts both the custom Docker container and a Redis container. With Docker Compose you can simply use
 
 ```
-$ make push
 $ docker-compose up
 ```
-
-This creates a custom Docker image with the Java binary, pushes it to our private registry, and starts both the custom Docker container and a Redis container.
 
 To test it on a Mac run something like: `curl $(boot2docker ip):4567`, on Linux machines `curl localhost:4567` should be sufficient.
 
