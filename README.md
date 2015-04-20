@@ -21,9 +21,9 @@ The web application is implemented using [Spark](http://sparkjava.com/). When th
 To run the two required containers locally you just have to do
 
 ```
-$ make push
-$ make run-redis
-$ make run-application
+$ make docker-build
+$ make docker-run-redis
+$ make docker-run-application
 ```
 
 This creates a custom Docker image with the Java binary, pushes it to our private registry, and starts both the custom Docker container and a Redis container. With Docker Compose you can simply use
