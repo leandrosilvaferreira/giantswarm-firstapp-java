@@ -46,7 +46,14 @@ To test it run something like: `curl currentweather-YOURUSERNAME.gigantic.io` an
 
 For all build and deploy details see the [Makefile](Makefile).
 
-For further documentation and guides see the [docs](https:://docs.giantswarm.io). 
+```
+$ swarm login
+$ docker login https://registry.giantswarm.io
+$ make docker-push
+$ make swarm-up
+```
+
+For further documentation and guides see the [docs](https:://docs.giantswarm.io).
 
 ## In other languages
 
