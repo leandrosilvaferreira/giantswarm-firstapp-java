@@ -10,11 +10,11 @@ docker-run-redis:
 	docker run -d -p 6379:6379\
 	 --name redis redis
 
-docker-run-application: build	
+docker-run-application: docker-build
 	docker run --rm -p 4567:4567 --link redis:redis $(REGISTRY)/$(username)/$(PROJECT)
 
-docker-push: build
+docker-push: docker-build
 	docker push $(REGISTRY)/$(username)/$(PROJECT)
 
-swarm-up: push
+swarm-up: docker-push
 	swarm up --var=username=$(username)
