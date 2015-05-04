@@ -53,7 +53,7 @@ $ make docker-push
 $ make swarm-up
 ```
 
-For further documentation and guides see the [docs](https:://docs.giantswarm.io).
+For further documentation and guides see the [docs](http://docs.giantswarm.io/).
 
 ## In other languages
 
