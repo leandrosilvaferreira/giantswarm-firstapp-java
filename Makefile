@@ -11,7 +11,7 @@ docker-run-redis:
 	docker run -d -p 6379:6379 \
 	 --name currentweather-redis-container redis
 
-# Testing your custom-built docker image locally
+# Running your custom-built docker image locally
 docker-run:
 	docker run --rm -p 4567:4567 -ti \
 		--link currentweather-redis-container:redis \
