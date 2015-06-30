@@ -6,7 +6,7 @@
       "components": [
         {
           "component_name": "java",
-          "image": "registry.giantswarm.io/$username/currentweather",
+          "image": "registry.giantswarm.io/$username/currentweather-java",
           "ports": [ 4567 ],
           "domains": { "currentweather-$username.gigantic.io": 4567 },
           "dependencies": [
