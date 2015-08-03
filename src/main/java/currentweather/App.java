@@ -9,6 +9,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.text.NumberFormat;
+import java.text.DecimalFormat;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,7 +26,7 @@ public class App {
     }
 
     private static String getCurrentWeather() throws IOException, JSONException {
-      
+
       String addr = "redis";
       if (System.getenv("REDIS_PORT_6379_TCP_ADDR") != null) {
         addr = System.getenv("REDIS_PORT_6379_TCP_ADDR");
@@ -48,8 +50,9 @@ public class App {
         Double temperature = (Double) json.getJSONObject("main").get("temp") - 273;
         int temp = Integer.valueOf(temperature.intValue());
         Double wind = (Double) json.getJSONObject("wind").get("speed") * 3.6;
+        NumberFormat formatter = new DecimalFormat("#0.0");
 
-        result = "The current temperature " + temp + " degrees and the wind is " + wind.toString() + " km/h.";
+        result = "The current temperature " + temp + " degrees and the wind is " + formatter.format(wind) + " km/h.";
 
         jedis.setex("weather", 60, result);
       } else {
@@ -63,20 +66,20 @@ public class App {
     StringBuilder sb = new StringBuilder();
     int cp;
     while ((cp = rd.read()) != -1) {
-    	sb.append((char) cp);
+      sb.append((char) cp);
     }
     return sb.toString();
-	}
+  }
 
- 	public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
+  public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
     InputStream is = new URL(url).openStream();
     try {
-    	BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+      BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
       String jsonText = readAll(rd);
-    	JSONObject json = new JSONObject(jsonText);
+      JSONObject json = new JSONObject(jsonText);
       return json;
     } finally {
-    	is.close();
+      is.close();
     }
   }
 }
