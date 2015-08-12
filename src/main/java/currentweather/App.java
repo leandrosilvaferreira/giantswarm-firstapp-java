@@ -20,9 +20,18 @@ import redis.clients.jedis.Jedis;
 public class App {
 
     public static void main(String[] args) {
-        get("/", (req, res) -> {
-            return "Live weather: " + getCurrentWeather();
+
+      Runtime.getRuntime().addShutdownHook(new Thread() {
+        @Override
+            public void run() {
+                System.out.println("Stopping gracefully");
+                Thread.currentThread().interrupt();
+            }
         });
+
+      get("/", (req, res) -> {
+        return "Live weather: " + getCurrentWeather();
+      });
     }
 
     private static String getCurrentWeather() throws IOException, JSONException {
