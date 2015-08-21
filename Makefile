@@ -7,15 +7,15 @@ docker-build:
 	docker build -t registry.giantswarm.io/$(GIANTSWARM_USERNAME)/currentweather-java .
 
 # Starting redis container to run in the background
-docker-run-redis:
-	@docker kill currentweather-redis-container > /dev/null || true
-	@docker rm currentweather-redis-container > /dev/null || true
-	docker run -d --name currentweather-redis-container redis
+docker-run-mongo:
+	@docker kill currentweather-mongo-container > /dev/null || true
+	@docker rm currentweather-mongo-container > /dev/null || true
+	docker run -d --name currentweather-mongo-container mongo
 
 # Running your custom-built docker image locally
 docker-run:
 	docker run --rm -p 4567:4567 -ti \
-		--link currentweather-redis-container:redis \
+		--link currentweather-mongo-container:mongo \
 		--name currentweather-java-container \
 		registry.giantswarm.io/$(GIANTSWARM_USERNAME)/currentweather-java
 
