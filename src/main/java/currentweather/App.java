@@ -15,8 +15,6 @@ import java.text.DecimalFormat;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import redis.clients.jedis.Jedis;
-
 import com.mongodb.*;
 
 public class App {
@@ -40,11 +38,9 @@ public class App {
       MongoClient mongo = new MongoClient(addr, port);
       DB db = mongo.getDB("currentweather");
       DBCollection col = db.getCollection("data");
-      System.out.println("MongoDB: " + mongo);
 
       // get the cached weather if available
-      // TODO
-      String result = "jedis.get(weather);";
+      String result = getCachedWeather(col);
 
       // if weather was not cached then make an API call and cache the result
       if (result == null) {
@@ -57,14 +53,28 @@ public class App {
         NumberFormat formatter = new DecimalFormat("#0.0");
 
         result = "The current temperature " + temp + " degrees and the wind is " + formatter.format(wind) + " km/h.";
-
-        //jedis.setex("weather", 60, result);
+        
+        BasicDBObject document = new BasicDBObject();
+        document.put("weather", result);
+        //TODO set TTL 60
+        col.insert(document);
       } else {
         System.out.println("Using cached data");
       }
 
-      return "dummy resilt";
+      return result;
     }
+
+  //TODO ugly. make more mongo like.
+  private static String getCachedWeather(DBCollection col) {
+      String result = null;
+      DBCursor cursorDoc = col.find();
+      while (cursorDoc.hasNext()) {
+        result = "" + cursorDoc.next();
+        System.out.println("Next: " + result);
+      }
+      return result;
+  }
 
   private static String readAll(Reader rd) throws IOException {
     StringBuilder sb = new StringBuilder();
