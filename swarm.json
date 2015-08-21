@@ -6,17 +6,17 @@
       "ports": [4567],
       "links": [
         {
-          "component": "redis",
-          "target_port": 6379
+          "component": "mongo",
+          "target_port": 27017
         }
       ],
       "domains": {
         "4567": "currentweather-$GIANTSWARM_LOGIN_NAME.gigantic.io"
       }
     },
-    "redis": {
-      "image": "redis:latest",
-      "ports": [6379]
+    "mongo": {
+      "image": "mongo:latest",
+      "ports": [27017]
     }
   }
 }
