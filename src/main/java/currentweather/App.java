@@ -56,15 +56,15 @@ public class App {
         result = "The current temperature " + temp + " degrees and the wind is " + formatter.format(wind) + " km/h.";
         
         //TODO TTL
+        //60 is the minimum
         BasicDBObject index = new BasicDBObject("createdAt", 1);
-        BasicDBObject options = new BasicDBObject("expireAfterSeconds", 10);
+        BasicDBObject options = new BasicDBObject("expireAfterSeconds", 60);
         col.ensureIndex(index, options);
 
         BasicDBObject document = new BasicDBObject();
         document.put("weather", result);
         document.put("createdAt", new Date());
         col.insert(document);
-
       } else {
         System.out.println("Using cached data");
       }
