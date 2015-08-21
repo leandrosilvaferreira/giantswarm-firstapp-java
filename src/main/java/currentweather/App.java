@@ -11,6 +11,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.text.NumberFormat;
 import java.text.DecimalFormat;
+import java.util.Date;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,10 +55,16 @@ public class App {
 
         result = "The current temperature " + temp + " degrees and the wind is " + formatter.format(wind) + " km/h.";
         
+        //TODO TTL
+        BasicDBObject index = new BasicDBObject("createdAt", 1);
+        BasicDBObject options = new BasicDBObject("expireAfterSeconds", 10);
+        col.ensureIndex(index, options);
+
         BasicDBObject document = new BasicDBObject();
         document.put("weather", result);
-        //TODO set TTL 60
+        document.put("createdAt", new Date());
         col.insert(document);
+
       } else {
         System.out.println("Using cached data");
       }
@@ -73,6 +80,7 @@ public class App {
         result = "" + cursorDoc.next();
         System.out.println("Next: " + result);
       }
+      //TODO only get weather key
       return result;
   }
 
