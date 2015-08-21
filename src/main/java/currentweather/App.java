@@ -17,6 +17,8 @@ import org.json.JSONObject;
 
 import redis.clients.jedis.Jedis;
 
+import com.mongodb.*;
+
 public class App {
 
     public static void main(String[] args) {
@@ -26,21 +28,23 @@ public class App {
     }
 
     private static String getCurrentWeather() throws IOException, JSONException {
-
-      String addr = "redis";
-      if (System.getenv("REDIS_PORT_6379_TCP_ADDR") != null) {
-        addr = System.getenv("REDIS_PORT_6379_TCP_ADDR");
+      String addr = "mongo";
+      if (System.getenv("MONGO_PORT_6379_TCP_ADDR") != null) {
+        addr = System.getenv("MONGO_PORT_6379_TCP_ADDR");
       }
 
-      int port = 6379;
-      if (System.getenv("REDIS_PORT_6379_TCP_PORT") != null) {
-        port = Integer.parseInt(System.getenv("REDIS_PORT_6379_TCP_PORT"));
+      int port = 27017;
+      if (System.getenv("MONGO_PORT_6379_TCP_PORT") != null) {
+        port = Integer.parseInt(System.getenv("MONGO_PORT_6379_TCP_PORT"));
       }
+      MongoClient mongo = new MongoClient(addr, port);
+      DB db = mongo.getDB("currentweather");
+      DBCollection col = db.getCollection("data");
+      System.out.println("MongoDB: " + mongo);
 
       // get the cached weather if available
-      Jedis jedis = new Jedis(addr,port);
-      jedis.connect();
-      String result = jedis.get("weather");
+      // TODO
+      String result = "jedis.get(weather);";
 
       // if weather was not cached then make an API call and cache the result
       if (result == null) {
@@ -54,12 +58,12 @@ public class App {
 
         result = "The current temperature " + temp + " degrees and the wind is " + formatter.format(wind) + " km/h.";
 
-        jedis.setex("weather", 60, result);
+        //jedis.setex("weather", 60, result);
       } else {
         System.out.println("Using cached data");
       }
 
-      return result;
+      return "dummy resilt";
     }
 
   private static String readAll(Reader rd) throws IOException {
