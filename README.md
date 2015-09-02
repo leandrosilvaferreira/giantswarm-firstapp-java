@@ -1,8 +1,8 @@
-# Getting Started with Java, Redis, and Docker on Giant Swarm
+# Getting Started with Java, Mongo, and Docker on Giant Swarm
 
-This is a simple example that demonstrates how to write a microservice in Java and deploy it on [Giant Swarm](https://giantswarm.io/). It pings an external API and caches the data in a Redis cache.
+This is a simple example that demonstrates how to write a microservice in Java and deploy it on [Giant Swarm](https://giantswarm.io/). It pings an external API and uses MongoDB as a cache.
 
-Check out the full tutorial here:
+Check out the full tutorial (with Redis) here:
 
 https://docs.giantswarm.io/guides/your-first-service/java/
 
@@ -14,7 +14,7 @@ https://docs.giantswarm.io/guides/your-first-service/java/
 
 ## Java Code
 
-The service is implemented using [Spark](http://sparkjava.com/). When the page is opened, it fetches current weather data for Cologne from the [openweather API](http://api.openweathermap.org/data/2.5/weather?q=Cologne,DE) and prints some details from that data. The response is cached on Redis for 60 seconds.
+The service is implemented using [Spark](http://sparkjava.com/). When the page is opened, it fetches current weather data for Cologne from the [openweather API](http://api.openweathermap.org/data/2.5/weather?q=Cologne,DE) and prints some details from that data. The response is cached on Mongo for 60 seconds.
 
 ## Testing the service locally
 
@@ -22,14 +22,14 @@ To run the two required containers locally you just have to do
 
 ```
 $ make docker-build
-$ make docker-run-redis
+$ make docker-run-mongo
 $ make docker-run
 ```
 
 This
 
 * creates a custom Docker image with the Java binary,
-* starts both the custom Docker container and a Redis container
+* starts both the custom Docker container and a Mongo container
 
 To test it on a Mac run something like: `curl $(boot2docker ip):4567`, on Linux `curl localhost:4567` should be sufficient.
 
