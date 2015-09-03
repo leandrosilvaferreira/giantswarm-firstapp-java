@@ -8,9 +8,8 @@ docker-build:
 
 # Starting redis container to run in the background
 docker-run-mongo:
-	@docker kill currentweather-mongo-container > /dev/null || true
-	@docker rm currentweather-mongo-container > /dev/null || true
-	docker run --name currentweather-mongo-container mongo mongod --smallfiles
+	#https://github.com/dockerfile/mongodb/issues/9#issuecomment-71938789
+	docker run -v /host/data:/data/db --name currentweather-mongo-container mongo mongod --smallfiles
 
 # Running your custom-built docker image locally
 docker-run:
