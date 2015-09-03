@@ -10,7 +10,7 @@ docker-build:
 docker-run-mongo:
 	@docker kill currentweather-mongo-container > /dev/null || true
 	@docker rm currentweather-mongo-container > /dev/null || true
-	docker run -d --name currentweather-mongo-container mongo
+	docker run --name currentweather-mongo-container mongo mongod --smallfiles
 
 # Running your custom-built docker image locally
 docker-run:
