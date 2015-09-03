@@ -39,6 +39,10 @@ public class App {
       MongoClient mongo = new MongoClient(addr, port);
       DB db = mongo.getDB("currentweather");
       DBCollection col = db.getCollection("data");
+      //60 is the minimum
+      BasicDBObject index = new BasicDBObject("createdAt", 1);
+      BasicDBObject options = new BasicDBObject("expireAfterSeconds", 60);
+      col.createIndex(index, options);
 
       // get the cached weather if available
       String result = getCachedWeather(col);
@@ -52,15 +56,8 @@ public class App {
         int temp = Integer.valueOf(temperature.intValue());
         Double wind = (Double) json.getJSONObject("wind").get("speed") * 3.6;
         NumberFormat formatter = new DecimalFormat("#0.0");
-
         result = "The current temperature " + temp + " degrees and the wind is " + formatter.format(wind) + " km/h.";
         
-        //TODO TTL
-        //60 is the minimum
-        BasicDBObject index = new BasicDBObject("createdAt", 1);
-        BasicDBObject options = new BasicDBObject("expireAfterSeconds", 60);
-        col.ensureIndex(index, options);
-
         BasicDBObject document = new BasicDBObject();
         document.put("weather", result);
         document.put("createdAt", new Date());
@@ -72,16 +69,13 @@ public class App {
       return result;
     }
 
-  //TODO ugly. make more mongo like.
   private static String getCachedWeather(DBCollection col) {
-      String result = null;
-      DBCursor cursorDoc = col.find();
-      while (cursorDoc.hasNext()) {
-        result = "" + cursorDoc.next();
-        System.out.println("Next: " + result);
+      DBObject result = col.findOne();
+      if(result == null) {
+        return null;
+      } else {
+        return (String)result.get("weather");
       }
-      //TODO only get weather key
-      return result;
   }
 
   private static String readAll(Reader rd) throws IOException {
