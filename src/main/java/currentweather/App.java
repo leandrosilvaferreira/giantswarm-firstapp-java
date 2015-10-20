@@ -47,7 +47,7 @@ public class App {
         System.out.println("Querying live weather data");
         JSONObject json = readJsonFromUrl("http://api.openweathermap.org/data/2.5/weather?q=Cologne,DE");
 
-        Double temperature = (Double) json.getJSONObject("main").get("temp") - 273;
+        Double temperature = (Double) json.getJSONObject("main").get("temp") - 273.0;
         int temp = Integer.valueOf(temperature.intValue());
         Double wind = (Double) json.getJSONObject("wind").get("speed") * 3.6;
         NumberFormat formatter = new DecimalFormat("#0.0");
