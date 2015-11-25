@@ -25,6 +25,8 @@ public class App {
         });
     }
 
+    public static final String OpenWeatherMapAPIKey = "182564eaf55f709a58a13c40086fb5bb";
+
     private static String getCurrentWeather() throws IOException, JSONException {
 
       String addr = "redis";
@@ -45,7 +47,7 @@ public class App {
       // if weather was not cached then make an API call and cache the result
       if (result == null) {
         System.out.println("Querying live weather data");
-        JSONObject json = readJsonFromUrl("http://api.openweathermap.org/data/2.5/weather?q=Cologne,DE");
+        JSONObject json = readJsonFromUrl("http://api.openweathermap.org/data/2.5/weather?q=Cologne,DE&appid=" + OpenWeatherMapAPIKey);
 
         Double temperature = (Double) json.getJSONObject("main").get("temp") - 273.0;
         int temp = Integer.valueOf(temperature.intValue());
