@@ -30,14 +30,7 @@ public class App {
     private static String getCurrentWeather() throws IOException, JSONException {
 
       String addr = "redis";
-      if (System.getenv("REDIS_PORT_6379_TCP_ADDR") != null) {
-        addr = System.getenv("REDIS_PORT_6379_TCP_ADDR");
-      }
-
       int port = 6379;
-      if (System.getenv("REDIS_PORT_6379_TCP_PORT") != null) {
-        port = Integer.parseInt(System.getenv("REDIS_PORT_6379_TCP_PORT"));
-      }
 
       // get the cached weather if available
       Jedis jedis = new Jedis(addr,port);
