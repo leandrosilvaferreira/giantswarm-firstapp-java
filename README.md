@@ -1,5 +1,7 @@
 # Getting Started with Java, Redis, and Docker on Giant Swarm
 
+__Note__: This example is made for the first generation Giant Swarm platform, which is no longe supported. Check our [latest documentation](https://docs.giantswarm.io/) for content related to our new platform based on Kubernetes.
+
 This is a simple example that demonstrates how to write a microservice in Java and deploy it on [Giant Swarm](https://giantswarm.io/). It pings an external API and caches the data in a Redis cache.
 
 Check out the full tutorial here:
